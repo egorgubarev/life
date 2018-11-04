@@ -20,7 +20,7 @@ function tableCreate() {
     var tbl = document.createElement('table');
     for(var i = 0; i < cellsA.length; i++) {
         var tr = document.createElement('tr');
-        tr.style.height = "5px";
+        tr.style.height = "6px";
         for (var j = 0; j < cellsA[i].length; j++) {
             var td = document.createElement('td');
             if (cellsA[i][j] === 1) {
@@ -28,7 +28,7 @@ function tableCreate() {
             } else {
                 td.style.backgroundColor = "#000000";
             }
-            td.style.width = "5px";
+            td.style.width = "6px";
             tr.appendChild(td);
         }
         tbl.appendChild(tr);
@@ -45,11 +45,15 @@ function snapshot() {
 }
 
 function getValue(i, j, n) {
-    if ((i === -1) || (i === n)) {
-        return 0;
+    if (i === -1) {
+        i = n-1;
+    } else if (i === n) {
+        i = 0;
     }
-    if ((j === -1) || (j === n)) {
-        return 0;
+    if (j === -1) {
+        j = n-1;
+    } else if (j === n) {
+        j = 0;
     }
     return cellsB[i][j];
 }
@@ -69,7 +73,7 @@ function evolute(n) {
 
 function makeEvolutionStep() {
     snapshot();
-    evolute(10);
+    evolute(100);
     removeTable();
     tableCreate();
 }
@@ -84,10 +88,9 @@ function startEvolution (){
     setInterval(makeEvolutionStep, 1);
 }
 
-random(10);
+random(100);
 tableCreate();
 
-// тор
 // счётчик фигни
 // изменение цвета от кол-ва поколений
 // алгоритм
