@@ -1,1 +1,1 @@
-# life
+# Life simulation program
