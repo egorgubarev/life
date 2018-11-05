@@ -1,3 +1,7 @@
+var size = 100;
+var px = 7;
+var border = 0;
+var generationNumber = 0;
 var cellsA = [];
 var cellsB = [];
 
@@ -6,7 +10,10 @@ function random(n) {
         var rowA = [];
         var rowB = [];
         for (var j = 0; j < n; j++) {
-            var r = Math.round(Math.random());
+            var r = 0;
+            if ((i > border) && (i < n - border) && (j > border) && (j < n - border)) {
+                r = Math.round(Math.random());
+            }
             rowA.push(r);
             rowB.push(r);
         }
@@ -20,7 +27,7 @@ function tableCreate() {
     var tbl = document.createElement('table');
     for(var i = 0; i < cellsA.length; i++) {
         var tr = document.createElement('tr');
-        tr.style.height = "6px";
+        tr.style.height = px + "px";
         for (var j = 0; j < cellsA[i].length; j++) {
             var td = document.createElement('td');
             if (cellsA[i][j] === 1) {
@@ -28,7 +35,7 @@ function tableCreate() {
             } else {
                 td.style.backgroundColor = "#000000";
             }
-            td.style.width = "6px";
+            td.style.width = px + "px";
             tr.appendChild(td);
         }
         tbl.appendChild(tr);
@@ -73,7 +80,10 @@ function evolute(n) {
 
 function makeEvolutionStep() {
     snapshot();
-    evolute(100);
+    evolute(size);
+    generationCount();
+    timeCount();
+    speedCount ();
     removeTable();
     tableCreate();
 }
@@ -85,13 +95,28 @@ function removeTable() {
 }
 
 function startEvolution (){
+    startTime = new Date().getTime();
     setInterval(makeEvolutionStep, 1);
 }
 
-random(100);
+function generationCount() {
+    $("#counter").val("Number of generation -> " + ++generationNumber);
+}
+
+function timeCount() {
+    nowTime = new Date().getTime();
+    timeFromStart = nowTime - startTime;
+    $ ("#timeCount").val("Time from start -> " + timeFromStart/1000 + " seconds");
+}
+
+function speedCount() {
+    speed = generationNumber/timeFromStart;
+    $ ("#speedCount").val("Speed of simulation -> " + speed*1000 + " generations in second");
+}
+
+random(size);
 tableCreate();
 
-// счётчик фигни
 // изменение цвета от кол-ва поколений
 // алгоритм
 // НОРМАЛЬНОЕ управлене
